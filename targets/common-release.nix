@@ -5,5 +5,6 @@
 {
   imports = [
     ./common.nix
+    ../modules/host/minimal-kernel.nix
   ];
 }
