@@ -37,15 +37,15 @@
         ++ (import ../modules/module-list.nix);
     };
     netvm = "netvm-${name}-${variant}";
-    firefoxvm = "appvm-firefox-${name}-${variant}";
+    firefoxvm = "firefox-${name}-${variant}";
   in {
     inherit hostConfiguration netvm firefoxvm;
     name = "${name}-${variant}";
     netvmConfiguration = import ../modules/virtualization/microvm/netvm.nix {
       inherit lib microvm system;
     };
-    firefoxvmConfiguration = import ../microvmConfigurations/appvm-firefox {
-      inherit nixpkgs microvm system;
+    firefoxvmConfiguration = import ../modules/virtualization/microvm/firefoxvm.nix {
+      inherit lib microvm system;
     };
     package = hostConfiguration.config.system.build.${hostConfiguration.config.formatAttr};
   };

@@ -4,6 +4,7 @@
   self,
   microvm,
   netvm,
+  firefoxvm,
 }: {
   config,
   lib,
@@ -26,6 +27,11 @@ in
       microvm.vms."${netvm}" = {
         flake = self;
         autostart = true;
+      };
+
+      microvm.vms."${firefoxvm}" = {
+        flake = self;
+        autostart = false;
       };
     };
   }

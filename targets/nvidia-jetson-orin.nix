@@ -76,8 +76,8 @@
           }
         ];
       };
-    firefoxvmConfiguration = import ../microvmConfigurations/appvm-firefox {
-      inherit nixpkgs microvm system;
+    firefoxvmConfiguration = import ../modules/virtualization/microvm/firefoxvm.nix {
+      inherit lib microvm system;
     };
     package = hostConfiguration.config.system.build.${hostConfiguration.config.formatAttr};
   };

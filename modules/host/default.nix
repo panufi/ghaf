@@ -4,6 +4,7 @@
   self,
   microvm,
   netvm,
+  firefoxvm,
 }: {
   lib,
   pkgs,
