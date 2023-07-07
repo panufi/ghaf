@@ -28,6 +28,15 @@ lib.nixosSystem {
         system.stateVersion = lib.trivial.release;
         microvm.hypervisor = "crosvm";
 
+        # microvm.hypervisor = "cloud-hypervisor";
+        #   Jetson ORIN, build failure:
+        #   error: attribute 'cloud-hypervisor-graphics' missing
+        # microvm.hypervisor = "qemu";
+        #   Jetson ORIN, start-up failure:
+        #   qemu-system-aarch64: OpenGL is not supported by the display
+
+        microvm.graphics.enable = true;
+
         networking = {
           enableIPv6 = false;
           firewall.allowedTCPPorts = [22];
@@ -48,7 +57,22 @@ lib.nixosSystem {
 
         environment.systemPackages = with pkgs; [
           firefox
+          sommelier
+          wayland-proxy-virtwl
+          xdg-utils
+          weston
+          wayland-utils
         ];
+
+        environment.sessionVariables = {
+          WAYLAND_DISPLAY = "wayland-1";
+          DISPLAY = ":0";
+          QT_QPA_PLATFORM = "wayland"; # Qt Applications
+          GDK_BACKEND = "wayland"; # GTK Applications
+          XDG_SESSION_TYPE = "wayland"; # Electron Applications
+          SDL_VIDEODRIVER = "wayland";
+          CLUTTER_BACKEND = "wayland";
+        };
       })
     ]
     ++ (import ../../module-list.nix);
